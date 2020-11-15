@@ -29,21 +29,32 @@ $scriptpath = 'c:\temp'
     $chartarea.Name = "ChartArea1"
     $chartarea.AxisY.Title = "Cases/Deaths"
     $chartarea.AxisY.TitleFont = "Arial,13pt"
-    $chartarea.AxisX.Title = "Date"
-    $chartarea.AxisX.TitleFont = "Arial,13pt"
+    $chartarea.AxisY.IsLabelAutoFit = $trure
+    #$chartarea.AxisX.Title = "Date"
+    #$chartarea.AxisX.TitleFont = "Arial,13pt"
     #$chartarea.AxisY.IsLogarithmic = $true
     #$chartarea.AxisX.Interval = 10
     $chart1.ChartAreas.Add($chartarea)
+
+    $chartarea2 = New-Object System.Windows.Forms.DataVisualization.Charting.ChartArea
+    $chartarea2.Name = "ChartArea2"
+    $chartarea2.AxisY.Title = "Deaths Ratio"
+    $chartarea2.AxisY.TitleFont = "Arial,13pt"
+    $chart1.ChartAreas.Add($chartarea2)
+     
+
 
     # Legend 
     $legend = New-Object system.Windows.Forms.DataVisualization.Charting.Legend
     $legend.name = "Legend1"
     $chart1.Legends.Add($legend)
     
-
+    #$legend2 = New-Object system.Windows.Forms.DataVisualization.Charting.Legend
+    #$legend2.name = "Legend2"
+    #$chart1.Legends.Add($legend2)
   
     # Data source
-    $datasource = $DataUS #| Select-Object -First 70
+    $datasource = $DataUS #| Select-Object -First 60
 
     # Data series (Active Cases)
 
@@ -76,7 +87,7 @@ $scriptpath = 'c:\temp'
  $chart1.Series["Deaths ratio"].BorderWidth  = 1
  $chart1.Series["Deaths ratio"].IsVisibleInLegend = $true
  $chart1.Series["Deaths ratio"].chartarea = "ChartArea2"
- $chart1.Series["Deaths ratio"].Legend = "Legend2"
+ #$chart1.Series["Deaths ratio"].Legend = "Legend2"
  #$chart1.Series["Deaths"].color = "#62B5CC"
  $datasource | ForEach-Object {$chart1.Series["Deaths ratio"].Points.addxy( $_.date ,($($_.deaths/$_.cases)*100)) }
 
